@@ -23,7 +23,7 @@ Python: 3.12+
   - Mock (for tests)
   - OpenAI (gpt-4o-mini by default)
   - Gemini (gemini-1.5-flash by default; tests use gemini-flash-latest)
-- Thorough unit and integration tests
+- Thorough unit tests (no network) and optional integration tests (OpenAI/Gemini)
 - Minimal public API with a single orchestrator to parse a resume into a dataclass
 
 
@@ -195,6 +195,10 @@ All tests (quick, excluding real LLM integrations)
 - With PDM: `pdm run pytest -q -m "not integration"`
 - With venv: `pytest -q -m "not integration"`
 
+Only unit tests (no network, fastest)
+- With PDM: `pdm run pytest -q tests/unit`
+- With venv: `pytest -q tests/unit`
+
 Run integration tests against real LLMs
 - OpenAI:
   - Ensure `OPENAI_API_KEY` is set
@@ -207,6 +211,19 @@ Parse real sample files (no network)
 - PDF sample: `tests/integration/test_pdf_real_data.py`
 - Word sample: `tests/integration/test_word_real_data.py`
 
+
+## Unit Test Coverage
+
+- tests/unit/test_email_extractor.py — basic, none, multiple, uppercase emails
+- tests/unit/test_name_extractor.py — trims, skips numeric/punct-only, empty input
+- tests/unit/test_skills_extractor_more.py — built-in LLMClient: multiple/no skills
+- tests/unit/test_resume_orchestration_parser_selection.py — parser selection and unsupported; uses pytest.importorskip for pdfplumber/docx
+- tests/unit/test_resume_extractor_edge_cases.py — KeyError when extractor keys missing
+
+Testing notes:
+- tests/conftest.py adds src to sys.path so imports of resparser work without installing the package.
+- Orchestrator lazily imports PDF/Word parsers to avoid import-time failures when optional deps are missing.
+- Unit tests require no API keys and no network.
 
 ## Design Overview
 
