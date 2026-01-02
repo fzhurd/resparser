@@ -1,17 +1,5 @@
 from ..parser.file_parser import FileParser
-
-
-# class WordParser(FileParser):
-#     def parse(self, file_path: str) -> str:
-#         # Stub: replace with python-docx in real implementation
-#         return """
-#         Jane Doe
-#         Contact: jane.doe@gmail.com
-#         Skills include Python, ML, Data Engineering
-#         """
-
 from docx import Document
-# from resume_parser.parsers import FileParser
 
 
 class WordParser(FileParser):

@@ -3,15 +3,6 @@ import pdfplumber
 from ..parser.file_parser import FileParser
 
 
-# class PDFParser(FileParser):
-#     def parse(self, file_path: str) -> str:
-#         # Stub: replace with pdfplumber / PyPDF2 in real implementation
-#         return """
-#         Jane Doe
-#         Email: jane.doe@gmail.com
-#         Experienced in Python, Machine Learning, and LLM systems.
-#         """
-
 class PDFParser(FileParser):
     def parse(self, file_path: str) -> str:
         text_chunks = []
